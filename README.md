@@ -1,4 +1,4 @@
 # solar_project
 Модель Солнечной системы на языке Python
 Test
-Twst1
+Twst1asgas
