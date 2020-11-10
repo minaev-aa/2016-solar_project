@@ -95,8 +95,13 @@ def write_space_objects_data_to_file(output_filename, space_objects):
     """
     with open(output_filename, 'w') as out_file:
         for obj in space_objects:
-            print(out_file, "%s %f %s %f, %f, %f, %f, %f" % (obj.tipe, obj.R, obj.color, obj.m, obj.x, obj.y, obj.Vx, obj.Vy,))
-
+            out_file.write("%s %f %s %f, %f, %f, %f, %f\n" % (obj.type, obj.R, obj.color, obj.m, obj.x, obj.y, obj.Vx, obj.Vy))
+'''
+def interesting_data_write(output_filename, data):
+    with open(output_filename, 'w') as out_file:
+        for i in range(len(data[0])):
+            out_file.write("%d		%f		%f\n" % (data[0][i], data[1][i], data[2][i]))
+'''
 # FIXME: хорошо бы ещё сделать функцию, сохранающую статистику в заданный файл...
 
 if __name__ == "__main__":
