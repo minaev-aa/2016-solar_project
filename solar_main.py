@@ -6,6 +6,7 @@ from tkinter.filedialog import *
 from solar_vis import *
 from solar_model import *
 from solar_input import *
+import matplotlib.pyplot as plt
 
 perform_execution = False
 """Флаг цикличности выполнения расчёта"""
@@ -25,6 +26,12 @@ time_step = None
 space_objects = []
 """Список космических объектов."""
 
+graph_data = [[], [], []]
+
+
+def distance_between_objects(obj1, obj2):
+    return ((obj1.x - obj2.x) ** 2 + (obj1.y - obj2.y) ** 2) ** 0.5
+
 
 def execution():
     """Функция исполнения -- выполняется циклически, вызывая обработку всех небесных тел,
@@ -39,6 +46,12 @@ def execution():
         update_object_position(space, body)
     physical_time += time_step.get()
     displayed_time.set("%.1f" % physical_time + " seconds gone")
+
+
+    graph_object = space_objects[1]
+    graph_data[0].append(physical_time)
+    graph_data[1].append((graph_object.Vx ** 2 + graph_object.Vy ** 2) ** 0.5)
+    graph_data[2].append(distance_between_objects(space_objects[0], graph_object))
 
     if perform_execution:
         space.after(101 - int(time_speed.get()), execution)
@@ -146,7 +159,22 @@ def main():
     time_label.pack(side=tkinter.RIGHT)
 
     root.mainloop()
+    graph_data_write("data.txt", graph_data)
+    sp = plt.subplot(221)
+    plt.plot(graph_data[2], graph_data[1])
+    plt.title('V(S)')
+    plt.grid(True)
+    sp = plt.subplot(222)
+    plt.plot(graph_data[0], graph_data[1])
+    plt.title('V(t)')
+    plt.grid(True)
+    sp = plt.subplot(223)
+    plt.plot(graph_data[0], graph_data[2])
+    plt.title('S(t)')
+    plt.grid(True)
+    plt.show()
     print('Modelling finished!')
+
 
 if __name__ == "__main__":
     main()
