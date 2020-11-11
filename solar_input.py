@@ -100,12 +100,19 @@ def write_space_objects_data_to_file(output_filename, space_objects):
 
 
 def graph_data_write(output_filename, data):
+    """Сохраняет данные о космических объектах в файл.
+    Строки должны иметь следующий формат:
+    <Время> <Скорость> <Расстояние между объектами>
+
+    Параметры:
+
+    **output_filename** — имя входного файла
+    **data** — список объектов планет и звёзд
+    """
     with open(output_filename, 'w') as out_file:
         for i in range(len(data[0])):
             out_file.write("%d, %f, %f\n" % (data[0][i], data[1][i], data[2][i]))
 
-
-# FIXME: хорошо бы ещё сделать функцию, сохранающую статистику в заданный файл...
 
 if __name__ == "__main__":
     print("This module is not for direct call!")
